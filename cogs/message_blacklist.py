@@ -7,7 +7,7 @@ class MessageBlacklist(utils.Cog):
 
     @utils.group()
     async def blacklist(self, ctx: utils.Context):
-        await ctx.send("Pong!")
+        return
 
     @blacklist.command()
     async def add(self, ctx: utils.Context, word: str):
@@ -37,6 +37,7 @@ class MessageBlacklist(utils.Cog):
         async with self.bot.database() as db:
             data = await db("SELECT word FROM blacklist_words WHERE guild_id = $1", message.guild.id)
 
+       	print(data)
         # Check if there are any blacklisted works
         if len(data) == 0:
             return
@@ -47,8 +48,10 @@ class MessageBlacklist(utils.Cog):
         for x in data:
             blacklisted_words.append(x["word"])
 
-        msg = message.content.strip(list(string.punctuation + string.digits + " "))
+        print(blacklisted_words)
 
+        msg = message.content.strip(list(string.punctuation + string.digits + " "))
+       	print(msg)
         # Check if blacklisted word is in message
         for word in blacklisted_words:
             if word in msg:
