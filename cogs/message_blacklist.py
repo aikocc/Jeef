@@ -18,9 +18,9 @@ class MessageBlacklist(utils.Cog):
         
         # Create a database connection and insert the word into the database        
         async with self.bot.database() as db:
-            data = await db("INSERT INTO blacklist_words (guild_id, word) VALUES ($1, $2)", ctx.guild.id, word)
+            data = await db("INSERT INTO blacklist_words (guild_id, word) VALUES ($1, $2)", ctx.guild.id, word.lower())
 
-        await ctx.send(f"Added `{word}` to the blacklist.")
+        await ctx.send(f"Added `{word.lower()}` to the blacklist.")
 
     @blacklist.command()
     @commands.has_permissions(manage_guild=True)
@@ -29,7 +29,7 @@ class MessageBlacklist(utils.Cog):
         
         # Create a database connection and insert the word into the database        
         async with self.bot.database() as db:
-            data = await db("DELETE FROM blacklist_words WHERE guild_id = $1, word = $2", ctx.guild.id, word)
+            data = await db("DELETE FROM blacklist_words WHERE guild_id = $1 AND word = $2", ctx.guild.id, word)
 
         await ctx.send(f"Removed `{word}` to the blacklist.")
 
