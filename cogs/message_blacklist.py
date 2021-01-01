@@ -56,11 +56,6 @@ class MessageBlacklist(utils.Cog):
                 await message.channel.send(f"{message.author} you can't say that word! >:(")
 
 
-
-
-
-
-
 def setup(bot:utils.Bot):
-    x = PingCommand(bot)
+    x = MessageBlacklist(bot)
     bot.add_cog(x)
