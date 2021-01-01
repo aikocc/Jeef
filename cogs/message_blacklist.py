@@ -7,12 +7,12 @@ import string
 class MessageBlacklist(utils.Cog):
 
     @utils.group()
-    @commands.has_permissions(manage_server=True)
+    @commands.has_permissions(manage_guild=True)
     async def blacklist(self, ctx: utils.Context):
         return
 
     @blacklist.command()
-    @commands.has_permissions(manage_server=True)
+    @commands.has_permissions(manage_guild=True)
     async def add(self, ctx: utils.Context, word: str):
         """Add words to blacklist"""
         
@@ -23,7 +23,7 @@ class MessageBlacklist(utils.Cog):
         await ctx.send(f"Added `{word}` to the blacklist.")
 
     @blacklist.command()
-    @commands.has_permissions(manage_server=True)
+    @commands.has_permissions(manage_guild=True)
     async def remove(self, ctx: utils.Context, word: str):
         """removes words to blacklist"""
         
@@ -34,7 +34,7 @@ class MessageBlacklist(utils.Cog):
         await ctx.send(f"Removed `{word}` to the blacklist.")
 
     @blacklist.command()
-    @commands.has_permissions(manage_server=True)
+    @commands.has_permissions(manage_guild=True)
     async def list(self, ctx: utils.Context):
         """removes words to blacklist"""
         
