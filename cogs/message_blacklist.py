@@ -1,4 +1,5 @@
 import voxelbotutils as utils
+import discord
 import string
 
 
@@ -29,7 +30,7 @@ class MessageBlacklist(utils.Cog):
         await message.channel.send(f"Removed `{word}` to the blacklist.")
 
     @utils.Cog.listener()
-    async def on_message(self, message: utils.Message):
+    async def on_message(self, message: discord.Message):
         """Check all messages and check if message contains a blacklisted word"""
 
         # Start a database connection and grab all blacklisted words
