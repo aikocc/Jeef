@@ -20,6 +20,8 @@ class YoutubeFeed(utils.Cog):
 
         for youtube_id in self.youtuber_ids:
 
+            video_links = []
+
             headers = {
                 "Authorization": f"Bearer {self.YOUTUBE_API_KEY}",
                 "Accept": "application/json",
@@ -34,8 +36,10 @@ class YoutubeFeed(utils.Cog):
                     return
 
                 new_videos = data["items"]
+                for x in new_videos:
+                	video_links.append(x)
 
-            message = f"Woah {new_videos[0]["snippet"]["channelTitle"]} has just uploaded a new video, you should go check it out!\n\n{'\n'.join([new_videos[x]['snippet'] for x in new_videos])}"
+            message = f"Woah {new_videos[0]["snippet"]["channelTitle"]} has just uploaded a new video, you should go check it out!\n\n{'\n'.join(video_links)}"
                 
             await self.bot.get_guild(793352612568760320).get_channel(794347469483671564).send(message)
 
