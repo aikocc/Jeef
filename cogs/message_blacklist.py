@@ -6,10 +6,12 @@ import string
 class MessageBlacklist(utils.Cog):
 
     @utils.group()
+    @commands.has_permissions(manage_server=True)
     async def blacklist(self, ctx: utils.Context):
         return
 
     @blacklist.command()
+    @commands.has_permissions(manage_server=True)
     async def add(self, ctx: utils.Context, word: str):
         """Add words to blacklist"""
         
@@ -20,6 +22,7 @@ class MessageBlacklist(utils.Cog):
         await ctx.send(f"Added `{word}` to the blacklist.")
 
     @blacklist.command()
+    @commands.has_permissions(manage_server=True)
     async def remove(self, ctx: utils.Context, word: str):
         """removes words to blacklist"""
         
@@ -30,12 +33,13 @@ class MessageBlacklist(utils.Cog):
         await ctx.send(f"Removed `{word}` to the blacklist.")
 
     @blacklist.command()
-    async def list(self, ctx: utils.Context, word: str):
+    @commands.has_permissions(manage_server=True)
+    async def list(self, ctx: utils.Context):
         """removes words to blacklist"""
         
         # Create a database connection and insert the word into the database        
         async with self.bot.database() as db:
-            data = await db("SELECT word FROM blacklist_words WHERE guild_id = $1", message.guild.id)
+            data = await db("SELECT word FROM blacklist_words WHERE guild_id = $1", ctx.guild.id)
 
         # Check if there are any blacklisted works
         if len(data) == 0:
@@ -69,7 +73,7 @@ class MessageBlacklist(utils.Cog):
         for x in data:
             blacklisted_words.append(x["word"])
 
-        msg = ''.join( [c for c in message.content if c not in set(string.punctuation + string.digits + " ")] )
+        msg = ''.join( [c for c in message.content.lower() if c not in set(string.punctuation + string.digits + " ")] )
         
         # Check if blacklisted word is in message
         for word in blacklisted_words:
