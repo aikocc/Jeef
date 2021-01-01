@@ -52,7 +52,7 @@ class MessageBlacklist(utils.Cog):
         for x in data:
             blacklisted_words += "`"+x["word"]+"` "
 
-        await ctx.send(f"Blacklist")
+        await ctx.send(f"Blacklist: " + blacklisted_words)
 
     @utils.Cog.listener()
     async def on_message(self, message: discord.Message):
