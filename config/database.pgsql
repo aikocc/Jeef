@@ -9,6 +9,13 @@ CREATE TABLE IF NOT EXISTS user_settings(
 );
 
 
+CREATE TABLE IF NOT EXISTS blacklist_words(
+    guild_id BIGINT,
+    words VARCHAR(50),
+    PRIMARY KEY (guild_id, words)
+);
+
+
 CREATE TABLE IF NOT EXISTS role_list(
     guild_id BIGINT,
     role_id BIGINT,
