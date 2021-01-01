@@ -35,7 +35,7 @@ class YoutubeFeed(utils.Cog):
 
                 new_videos = data["items"]
 
-            message = f"Woah {new_videos[0]["snippet"]["channelTitle"]} has just uploaded a new video, you should go check it out!\n\n{'\n'.join([new_videos[x]["snippet"] for x in new_videos])}"
+            message = f"Woah {new_videos[0]["snippet"]["channelTitle"]} has just uploaded a new video, you should go check it out!\n\n{'\n'.join([new_videos[x]['snippet'] for x in new_videos])}"
                 
             await self.bot.get_guild(793352612568760320).get_channel(794347469483671564).send(message)
 
