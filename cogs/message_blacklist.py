@@ -15,9 +15,9 @@ class MessageBlacklist(utils.Cog):
         
         # Create a database connection and insert the word into the database        
         async with self.bot.database() as db:
-            data = await db("INSERT INTO blacklist_words (guild_id, word) VALUES ($1, $2)", message.guild.id, word)
+            data = await db("INSERT INTO blacklist_words (guild_id, word) VALUES ($1, $2)", ctx.guild.id, word)
 
-        await message.channel.send(f"Added `{word}` to the blacklist.")
+        await ctx.send(f"Added `{word}` to the blacklist.")
 
     @blacklist.command()
     async def remove(self, ctx: utils.Context, word: str):
@@ -25,9 +25,9 @@ class MessageBlacklist(utils.Cog):
         
         # Create a database connection and insert the word into the database        
         async with self.bot.database() as db:
-            data = await db("DELETE FROM blacklist_words WHERE guild_id = $1, word = $2", message.guild.id, word)
+            data = await db("DELETE FROM blacklist_words WHERE guild_id = $1, word = $2", ctx.guild.id, word)
 
-        await message.channel.send(f"Removed `{word}` to the blacklist.")
+        await ctx.send(f"Removed `{word}` to the blacklist.")
 
     @utils.Cog.listener()
     async def on_message(self, message: discord.Message):
