@@ -37,7 +37,6 @@ class MessageBlacklist(utils.Cog):
         async with self.bot.database() as db:
             data = await db("SELECT word FROM blacklist_words WHERE guild_id = $1", message.guild.id)
 
-       	print(data)
         # Check if there are any blacklisted works
         if len(data) == 0:
             return
@@ -48,15 +47,13 @@ class MessageBlacklist(utils.Cog):
         for x in data:
             blacklisted_words.append(x["word"])
 
-        print(blacklisted_words)
-
         msg = message.content.strip(str(string.punctuation + string.digits + " "))
        	print(msg)
         # Check if blacklisted word is in message
         for word in blacklisted_words:
             if word in msg:
                 await message.delete()
-                await message.channel.send(f"{message.author} you can't say that word! >:(")
+                await message.channel.send(f"{message.author.mention} you can't say that word! >:(")
 
 
 def setup(bot:utils.Bot):
