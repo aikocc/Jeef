@@ -32,6 +32,8 @@ class MessageBlacklist(utils.Cog):
     @utils.Cog.listener()
     async def on_message(self, message: discord.Message):
         """Check all messages and check if message contains a blacklisted word"""
+        if message.author == message.guild.me:
+            return
 
         # Start a database connection and grab all blacklisted words
         async with self.bot.database() as db:
@@ -48,7 +50,7 @@ class MessageBlacklist(utils.Cog):
             blacklisted_words.append(x["word"])
 
         msg = message.content.strip(str(string.punctuation + string.digits + " "))
-       	print(msg)
+           print(msg)
         # Check if blacklisted word is in message
         for word in blacklisted_words:
             if word in msg:
