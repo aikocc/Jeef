@@ -50,7 +50,7 @@ class MessageBlacklist(utils.Cog):
 
         print(blacklisted_words)
 
-        msg = message.content.strip(list(string.punctuation + string.digits + " "))
+        msg = message.content.strip(str(string.punctuation + string.digits + " "))
        	print(msg)
         # Check if blacklisted word is in message
         for word in blacklisted_words:
