@@ -29,6 +29,26 @@ class MessageBlacklist(utils.Cog):
 
         await ctx.send(f"Removed `{word}` to the blacklist.")
 
+    @blacklist.command()
+    async def list(self, ctx: utils.Context, word: str):
+        """removes words to blacklist"""
+        
+        # Create a database connection and insert the word into the database        
+        async with self.bot.database() as db:
+            data = await db("SELECT word FROM blacklist_words WHERE guild_id = $1", message.guild.id)
+
+        # Check if there are any blacklisted works
+        if len(data) == 0:
+            return
+
+        blacklisted_words = ""
+
+        # Turn database result to a list
+        for x in data:
+            blacklisted_words += "`"+x["word"]+"` "
+
+        await ctx.send(f"Blacklist")
+
     @utils.Cog.listener()
     async def on_message(self, message: discord.Message):
         """Check all messages and check if message contains a blacklisted word"""
@@ -49,7 +69,7 @@ class MessageBlacklist(utils.Cog):
         for x in data:
             blacklisted_words.append(x["word"])
 
-        msg = message.content.strip(str(string.punctuation + string.digits + " "))
+        msg = ''.join( [c for c in message.content if c not in set(string.punctuation + string.digits + " ")] )
         
         # Check if blacklisted word is in message
         for word in blacklisted_words:
