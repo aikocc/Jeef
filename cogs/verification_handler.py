@@ -2,6 +2,7 @@ import discord
 import voxelbotutils as utils
 import string
 import random
+import textwrap
 
 
 class VerificationHandler(utils.Cog):
