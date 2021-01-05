@@ -20,7 +20,7 @@ class VerificationHandler(utils.Cog):
         if member.guild.id != 795795423838470186:
             return
 
-        code = "".join([random.choice(list(string.ascii_letters + string.digits + ' ')) for _ in range(10)])
+        code = "".join([random.choice(list(string.ascii_letters + string.digits)) for _ in range(10)])
 
         self.random_code[member.id] = code
 
