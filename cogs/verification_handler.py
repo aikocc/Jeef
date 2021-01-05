@@ -40,6 +40,7 @@ class VerificationHandler(utils.Cog):
     	"""
 
     	if self.random_code[ctx.author.id] == code:
+    		del self.random_code[ctx.author.id]
     		guild = self.bot.get_guild(795795423838470186)
     		member = guild.get_member(ctx.author.id)
     		try:
