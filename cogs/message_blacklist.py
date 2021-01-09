@@ -15,6 +15,8 @@ class MessageBlacklist(utils.Cog):
     @commands.has_permissions(manage_guild=True)
     async def add(self, ctx: utils.Context, word: str):
         """Add words to blacklist"""
+
+        word = ''.join( [c for c in word.lower() if c not in set(string.punctuation + string.digits + string.whitespace)] )
         
         # Create a database connection and insert the word into the database        
         async with self.bot.database() as db:
@@ -26,6 +28,8 @@ class MessageBlacklist(utils.Cog):
     @commands.has_permissions(manage_guild=True)
     async def remove(self, ctx: utils.Context, word: str):
         """removes words to blacklist"""
+
+        word = ''.join( [c for c in word.lower() if c not in set(string.punctuation + string.digits + string.whitespace)] )
         
         # Create a database connection and insert the word into the database        
         async with self.bot.database() as db:
@@ -36,7 +40,7 @@ class MessageBlacklist(utils.Cog):
     @blacklist.command()
     @commands.has_permissions(manage_guild=True)
     async def list(self, ctx: utils.Context):
-        """removes words to blacklist"""
+        """lists blacklisted words"""
         
         # Create a database connection and insert the word into the database        
         async with self.bot.database() as db:
@@ -74,13 +78,15 @@ class MessageBlacklist(utils.Cog):
         for x in data:
             blacklisted_words.append(x["word"])
 
-        msg = ''.join( [c for c in message.content.lower() if c not in set(string.punctuation + string.digits + " ")] )
+        msg = ''.join( [c for c in message.content.lower() if c not in set(string.punctuation + string.digits + string.whitespace)] )
+
         
         # Check if blacklisted word is in message
         for word in blacklisted_words:
             if word in msg:
                 await message.delete()
                 await message.channel.send(f"{message.author.mention} you can't say that word! >:(")
+                self.bot.dispatch('blacklisted_word', message.author, word)
 
 
 def setup(bot:utils.Bot):
